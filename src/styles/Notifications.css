@@ -1,0 +1,32 @@
+.notifications {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.overdue-section,
+.today-section {
+    margin-top: 20px;
+}
+
+.notification-card {
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.notification-card.overdue {
+    background-color: #ffcccc;
+}
+
+.notification-card.today {
+    background-color: #fff6cc;
+}
+
+h2,
+h3 {
+    text-align: center;
+}
+
+h3 {
+    margin-top: 10px;
+}

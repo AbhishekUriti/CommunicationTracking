@@ -1,0 +1,19 @@
+.communication-method-form {
+    margin: 20px;
+}
+
+.communication-method-form div {
+    margin-bottom: 10px;
+}
+
+.communication-method-form label {
+    display: block;
+    font-weight: bold;
+}
+
+.communication-method-form input,
+.communication-method-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+}
