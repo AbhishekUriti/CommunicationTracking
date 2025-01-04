@@ -1,32 +1,54 @@
 .notifications {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    padding: 20px;
 }
 
 .overdue-section,
 .today-section {
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .notification-card {
-    border-radius: 5px;
+    background-color: #ffe6e6;
+    border: 1px solid #ffcccc;
     padding: 10px;
-    margin: 10px 0;
-}
-
-.notification-card.overdue {
-    background-color: #ffcccc;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 
 .notification-card.today {
-    background-color: #fff6cc;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
 }
 
-h2,
-h3 {
-    text-align: center;
+.popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-h3 {
-    margin-top: 10px;
+.popup-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.popup-content button {
+    background-color: #721c24;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.popup-content button:hover {
+    background-color: #f5c6cb;
+    color: #721c24;
 }

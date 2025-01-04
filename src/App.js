@@ -24,17 +24,7 @@ function App() {
         { date: "2024-11-25" },
       ],
     },
-    {
-      name: "Company A",
-      lastCommunications: [
-        { date: "2025-01-01" },
-        { date: "2024-12-25" },
-      ],
-    },
-    {
-      name: "Company B",
-      lastCommunications: [{ date: "2024-12-30" }],
-    },
+
   ]);
 
   const [notificationCount, setNotificationCount] = useState(0);
@@ -172,3 +162,5 @@ function CalendarView({ companies }) {
 }
 
 export default App;
+
+
