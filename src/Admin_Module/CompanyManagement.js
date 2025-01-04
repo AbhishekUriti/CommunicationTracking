@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import CompanyForm from './CompanyForm';
 import '../styles/CompanyManagement.css';
+import { AppContext } from "../User_Module/AppContext";
 
 
 const CompanyManagement = () => {
-  const [companies, setCompanies] = useState([
-    { id: 1, name: 'Wipro', location: 'UK', linkedin: '', emails: [], phones: [], comments: '', periodicity: '2 weeks' },
-    { id: 2, name: 'TCS', location: 'USA', linkedin: '', emails: [], phones: [], comments: '', periodicity: '2 weeks' },
-  ]);
-  
-  const [editingCompany, setEditingCompany] = useState(null);
+   const {companies, setCompanies} =useContext(AppContext);
+   const [editingCompany, setEditingCompany] = useState(null);
 
   const handleAddCompany = (company) => {
     setCompanies([...companies, { id: companies.length + 1, ...company }]);
@@ -49,8 +46,8 @@ const CompanyManagement = () => {
               <td>{company.name}</td>
               <td>{company.location}</td>
               <td>
-                <button onClick={() => setEditingCompany(company)}>Edit</button>
-                <button onClick={() => handleDeleteCompany(company.id)}>Delete</button>
+                <button onClick={() => setEditingCompany(company)}>✏️</button>
+                <button onClick={() => handleDeleteCompany(company.id)}>🗑️</button>
               </td>
             </tr>
           ))}

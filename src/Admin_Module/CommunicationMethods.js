@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import AddEditModal from "./AddEditModal";
 import "../styles/CommunicationMethods.css";
+import { AppContext } from "../User_Module/AppContext"; 
 
 const CommunicationMethods = () => {
-  const [methods, setMethods] = useState([
-    { id: 1, name: "LinkedIn Post", mandatory: true, sequence: 1 },
-    { id: 2, name: "LinkedIn Email", mandatory: true, sequence: 2 },
-  ]);
-
+  const { methods, setMethods } = useContext(AppContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editMethod, setEditMethod] = useState(null);
 
