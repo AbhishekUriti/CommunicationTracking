@@ -27,3 +27,7 @@ This is a React-based Calendar Application designed for tracking communications 
 
 ## License
 This project is licensed under the MIT License.
+
+## Output
+
+![image alt](https://github.com/AbhishekUriti/CommunicationTracking/blob/adec6c71173281d245d94c2940c38d808be04f10/Screenshot%202025-01-05%20012327.png)
