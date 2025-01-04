@@ -6,7 +6,7 @@ function ReportingAnalyticsModule() {
   const [engagementEffectivenessData, setEngagementEffectivenessData] = useState([]);
   const [overdueCommunicationTrendsData, setOverdueCommunicationTrendsData] = useState([]);
 
-  // Example of mock data
+
   useEffect(() => {
     setCommunicationFrequencyData([
       { name: 'Jan', frequency: 12 },
