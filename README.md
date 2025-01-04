@@ -27,3 +27,4 @@ This is a React-based Calendar Application designed for tracking communications 
 
 ## License
 This project is licensed under the MIT License.
+
