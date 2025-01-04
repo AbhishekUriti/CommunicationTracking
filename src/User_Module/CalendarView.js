@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { AppContext } from './AppContext'; // Import the AppContext
+import { AppContext } from "../User_Module/AppContext";
 import '../styles/CalendarView.css'; // Import the updated styles
 
 const CalendarView = () => {
