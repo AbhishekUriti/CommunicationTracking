@@ -8,26 +8,28 @@
 }
 
 .notification-card {
-    background-color: #ffe6e6;
-    border: 1px solid #ffcccc;
+    background-color: #fff9c4;
+    border: 1px solid #f0c418;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
+    color: #333;
 }
 
 .notification-card.today {
-    background-color: #fff3cd;
-    border: 1px solid #ffeeba;
+    background-color: #e7f3fe;
+    border: 1px solid #b3d8ff;
+    color: #333;
 }
 
 .popup {
     position: fixed;
     top: 20px;
     right: 20px;
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: #ffffff;
+    color: #000000;
     padding: 15px;
-    border: 1px solid #f5c6cb;
+    border: 1px solid #cccccc;
     border-radius: 5px;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -40,8 +42,8 @@
 }
 
 .popup-content button {
-    background-color: #721c24;
-    color: white;
+    background-color: #000000a8;
+    color: #ffffff;
     border: none;
     padding: 5px 10px;
     border-radius: 3px;
@@ -49,6 +51,6 @@
 }
 
 .popup-content button:hover {
-    background-color: #f5c6cb;
-    color: #721c24;
+    background-color: #f0f0f0;
+    color: #000000;
 }

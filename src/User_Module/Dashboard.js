@@ -24,23 +24,22 @@ const Dashboard = () => {
   };
 
   const handleSubmit = () => {
-  const updatedCompanies = companies.map((company) => 
-    company.name === selectedCompany.name
-      ? {
-          ...company,
-          lastCommunications: [
-            { type: newCommunication.type, date: newCommunication.date },
-            ...(company.lastCommunications ? company.lastCommunications.slice(0, 4) : []), // Ensure it's an array
-          ],
-          highlight: "none",
-        }
-      : company
-  );
+    const updatedCompanies = companies.map((company) =>
+      company.name === selectedCompany.name
+        ? {
+            ...company,
+            lastCommunications: [
+              { type: newCommunication.type, date: newCommunication.date, notes: newCommunication.notes },
+              ...(company.lastCommunications || []).slice(0, 4), // Ensure it's an array and slice only 5
+            ],
+            highlight: "highlight", // You can customize the highlight if needed
+          }
+        : company
+    );
 
-  setCompanies(updatedCompanies);
-  closeModal();
-};
-
+    setCompanies(updatedCompanies);
+    closeModal();
+  };
 
   return (
     <div className="dashboard">
@@ -81,7 +80,7 @@ const Dashboard = () => {
                   )}
                 </td>
                 <td>
-                  <button onClick={() => openModal(company)}>Add Communication</button>
+                <button className="add-commun-btn"  onClick={() => openModal(company) }>Add Communication</button>
                 </td>
               </tr>
             ))
@@ -95,52 +94,64 @@ const Dashboard = () => {
 
       {modalVisible && selectedCompany && (
         <div className="modal">
-          <h3>Log Communication for {selectedCompany.name}</h3>
+          <div className="modal-header">
+            <h3>Log Communication for {selectedCompany.name}</h3>
+          </div>
           <form
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();
             }}
           >
-            <label>
-              Type of Communication:
-              <select
-                value={newCommunication.type}
-                onChange={(e) =>
-                  setNewCommunication({ ...newCommunication, type: e.target.value })
-                }
-                required
-              >
-                <option value="">Select</option>
-                <option value="Email">Email</option>
-                <option value="LinkedIn Post">LinkedIn Post</option>
-                <option value="LinkedIn Message">LinkedIn Message</option>
-              </select>
-            </label>
-            <label>
-              Date:
-              <input
-                type="date"
-                value={newCommunication.date}
-                onChange={(e) =>
-                  setNewCommunication({ ...newCommunication, date: e.target.value })
-                }
-                required
-              />
-            </label>
-            <label>
-              Notes:
-              <textarea
-                value={newCommunication.notes}
-                onChange={(e) =>
-                  setNewCommunication({ ...newCommunication, notes: e.target.value })
-                }
-              />
-            </label>
-            <button type="submit">Submit</button>
-            <button type="button" onClick={closeModal}>
-              Cancel
-            </button>
+            <div className="modal-body">
+              <label>
+                Type of Communication:
+                <select
+                  value={newCommunication.type}
+                  onChange={(e) =>
+                    setNewCommunication({ ...newCommunication, type: e.target.value })
+                  }
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="Email">Email</option>
+                  <option value="LinkedIn Post">LinkedIn Post</option>
+                  <option value="LinkedIn Message">LinkedIn Message</option>
+                </select>
+              </label>
+
+              <label>
+                Date:
+                <input
+                  type="date"
+                  value={newCommunication.date}
+                  onChange={(e) =>
+                    setNewCommunication({ ...newCommunication, date: e.target.value })
+                  }
+                  required
+                />
+              </label>
+
+              <label>
+                Notes:
+                <textarea
+                  value={newCommunication.notes}
+                  onChange={(e) =>
+                    setNewCommunication({ ...newCommunication, notes: e.target.value })
+                  }
+                  placeholder="Add any notes about this communication"
+                />
+              </label>
+            </div>
+
+            <div className="modal-actions">
+              <button type="submit" className="btn-submit">
+                Submit
+              </button>
+              <button type="button" className="btn-cancel" onClick={closeModal}>
+                Cancel
+              </button>
+            </div>
           </form>
         </div>
       )}

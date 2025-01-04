@@ -30,7 +30,11 @@ const CommunicationMethods = () => {
   return (
     <div className="communication-methods">
       <h2>Communication Method Management</h2>
-      <button onClick={() => setIsModalOpen(true)}>Add Communication Method</button>
+      <div className="add-communication-button">
+        <button onClick={() => setIsModalOpen(true)}>Add Communication Method</button>
+      </div>
+
+      
       <table>
         <thead>
           <tr>

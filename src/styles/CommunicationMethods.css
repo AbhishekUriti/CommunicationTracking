@@ -45,3 +45,44 @@ table th {
     border-radius: 5px;
     width: 300px;
 }
+
+.communication-methods {
+    padding: 20px;
+    text-align: center;
+    /* Center-align all child elements horizontally */
+}
+
+.add-communication-button button {
+    margin: 20px auto;
+    /* Add spacing and center the button */
+    display: inline-block;
+    padding: 10px 20px;
+    background-color:#4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-communication-button button:hover {
+    background-color: #45a049;
+}
+
+.communication-methods table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    /* Add spacing between the button and table */
+}
+
+.communication-methods table th,
+.communication-methods table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.communication-methods table th {
+    background-color: #f4f4f4;
+}

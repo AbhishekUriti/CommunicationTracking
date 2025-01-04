@@ -22,42 +22,79 @@ const CompanyForm = ({ company = {}, onSave, onCancel }) => {
   };
 
   return (
-    <form className="company-form" onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-      </label>
-      <label>
-        Location:
-        <input type="text" name="location" value={formData.location} onChange={handleChange} required />
-      </label>
-      <label>
-        LinkedIn Profile:
-        <input type="url" name="linkedin" value={formData.linkedin} onChange={handleChange} />
-      </label>
-      <label>
-        Emails (comma-separated):
-        <input type="text" name="emails" value={formData.emails} onChange={handleChange} />
-      </label>
-      <label>
-        Phone Numbers (comma-separated):
-        <input type="text" name="phones" value={formData.phones} onChange={handleChange} />
-      </label>
-      <label>
-        Comments:
-        <textarea name="comments" value={formData.comments} onChange={handleChange} />
-      </label>
-      <label>
-        Communication Periodicity:
-        <input type="text" name="periodicity" value={formData.periodicity} onChange={handleChange} />
-      </label>
-      <div className="form-actions">
-        <button type="submit">Save</button>
-        <button type="button" onClick={onCancel}>
-          Cancel
-        </button>
-      </div>
-    </form>
+          <form className="company-form" onSubmit={handleSubmit}>
+        <div className="form-field">
+          <label>Name:</label><br/>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>Location:</label><br/>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>LinkedIn Profile:</label><br/>
+          <input
+            type="url"
+            name="linkedin"
+            value={formData.linkedin}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-field">
+          <label>Emails:</label><br/>
+          <input
+            type="text"
+            name="emails"
+            value={formData.emails}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-field">
+          <label>Phone Number:</label><br/>
+          <input
+            type="text"
+            name="phones"
+            value={formData.phones}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-field">
+          <label>Comments:</label><br/>
+          <textarea
+            name="comments"
+            value={formData.comments}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-field">
+          <label>Communication Periodicity:</label><br/>
+          <input
+            type="text"
+            name="periodicity"
+            value={formData.periodicity}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-actions"><br/>
+          <button type="submit">Save</button>
+          <button type="button" onClick={onCancel}>
+            Cancel
+          </button>
+        </div>
+      </form>
+
   );
 };
 

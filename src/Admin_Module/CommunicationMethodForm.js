@@ -1,39 +1,59 @@
 import React, { useState } from "react";
-import '../styles/CommunicationMethodForm.css';
-
-
+import "../styles/CommunicationMethodForm.css";
 
 const CommunicationMethodForm = () => {
-  const [method, setMethod] = useState({ name: "", description: "", mandatory: false });
+  const [method, setMethod] = useState({
+    name: "",
+    sequence: "",
+    mandatory: false,
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(method);
-    setMethod({ name: "", description: "", mandatory: false });
+    setMethod({ name: "", sequence: "", mandatory: false });
   };
 
   return (
     <form className="method-form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Method Name"
-        value={method.name}
-        onChange={(e) => setMethod({ ...method, name: e.target.value })}
-      />
-      <textarea
-        placeholder="Description"
-        value={method.description}
-        onChange={(e) => setMethod({ ...method, description: e.target.value })}
-      ></textarea>
-      <label>
+      <div className="form-group">
+        <label htmlFor="name">Name</label>
         <input
-          type="checkbox"
-          checked={method.mandatory}
-          onChange={(e) => setMethod({ ...method, mandatory: e.target.checked })}
+          id="name"
+          type="text"
+          placeholder="Enter Name"
+          value={method.name}
+          onChange={(e) => setMethod({ ...method, name: e.target.value })}
         />
-        Mandatory
-      </label>
-      <button type="submit">Save Method</button>
+      </div>
+      <div className="form-group">
+        <label htmlFor="sequence">Sequence</label>
+        <input
+          id="sequence"
+          type="number"
+          placeholder="Enter Sequence"
+          value={method.sequence}
+          onChange={(e) => setMethod({ ...method, sequence: e.target.value })}
+        />
+      </div>
+
+      <div className="form-group">
+        <label>
+          <input
+            type="checkbox"
+            checked={method.mandatory}
+            onChange={(e) =>
+              setMethod({ ...method, mandatory: e.target.checked })
+            }
+          />
+          Mandatory
+        </label>
+      </div>
+
+
+      <button type="submit" className="save-button">
+        Save Method
+      </button>
     </form>
   );
 };
