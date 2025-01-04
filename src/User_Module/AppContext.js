@@ -12,7 +12,7 @@ export const AppProvider = ({ children }) => {
         { type: "LinkedIn", date: "2024-11-25" },
       ],
       nextCommunication: { type: "LinkedIn", date: "2024-12-31" },
-      highlight: "none", // "red", "yellow", "none"
+      highlight: "yellow", // "red", "yellow", "none"
     },
     {
       name: "TCS",
@@ -32,7 +32,11 @@ export const AppProvider = ({ children }) => {
     { id: 3, name: "Phone Call", mandatory: false, sequence: 3 },
   ]);
 
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([{
+      title: "Google - Email", // Example event
+      start: new Date().toISOString().split("T")[0], // Today's date
+      allDay: true,
+    },]);
   const [overdueCommunications, setOverdueCommunications] = useState([]);
   const [todaysCommunications, setTodaysCommunications] = useState([]);
   const [showPopup, setShowPopup] = useState(false);

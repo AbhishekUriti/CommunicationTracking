@@ -62,18 +62,7 @@ const Reports = () => {
     doc.save("reporting_and_analytics.pdf");
   };
 
-  // State for filtering
-  const [filters, setFilters] = useState({
-    company: "",
-    dateRange: { start: "", end: "" },
-    method: "",
-  });
-
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters({ ...filters, [name]: value });
-  };
-
+ 
   return (
     <div style={{ padding: "20px" }}>
       <h1>Reporting and Analytics</h1>
@@ -116,65 +105,16 @@ const Reports = () => {
         </div>
       </div>
 
-      {/* Filters Section */}
-      <div style={{ marginTop: "20px" }}>
-        <h3>Filters</h3>
-        <div>
-          <label>
-            Company:
-            <input
-              type="text"
-              name="company"
-              value={filters.company}
-              onChange={handleFilterChange}
-            />
-          </label>
-          <label>
-            Date Range:
-            <input
-              type="date"
-              name="dateRange.start"
-              value={filters.dateRange.start}
-              onChange={handleFilterChange}
-            />
-            <input
-              type="date"
-              name="dateRange.end"
-              value={filters.dateRange.end}
-              onChange={handleFilterChange}
-            />
-          </label>
-          <label>
-            Communication Method:
-            <select
-              name="method"
-              value={filters.method}
-              onChange={handleFilterChange}
-            >
-              <option value="">All</option>
-              <option value="LinkedIn">LinkedIn</option>
-              <option value="Email">Email</option>
-              <option value="Calls">Calls</option>
-            </select>
-          </label>
+     {/* Overdue Trends */}
+        <div style={{ marginTop: "40px" }}>
+            <OverdueTrends exportToPDF={exportToPDF} exportToCSV={exportToCSV}/>
         </div>
-      </div>
 
-      {/* Overdue Trends */}
-      <div style={{ marginTop: "40px" }}>
-        <OverdueTrends />
-      </div>
+        {/* Activity Log */}
+        <div style={{ marginTop: "20px" }}>
+            <ActivityLog />
+        </div>
 
-      {/* Activity Log */}
-      <div style={{ marginTop: "20px" }}>
-        <ActivityLog />
-      </div>
-
-      {/* Export Section */}
-      <div style={{ marginTop: "20px" }}>
-        <button onClick={exportToPDF}>Export to PDF</button>
-        <button onClick={exportToCSV}>Export to CSV</button>
-      </div>
     </div>
   );
 };
