@@ -33,8 +33,8 @@ export const AppProvider = ({ children }) => {
   ]);
 
   const [events, setEvents] = useState([{
-      title: "Google - Email", // Example event
-      start: new Date().toISOString().split("T")[0], // Today's date
+      title: "Google - Email",
+      start: new Date().toISOString().split("T")[0],
       allDay: true,
     },]);
   const [overdueCommunications, setOverdueCommunications] = useState([]);

@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useContext } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import { AppContext } from "./AppContext";
 
 const CalendarView = () => {
-  // State for managing events
-  const [events, setEvents] = useState([
-    {
-      title: "Google - Email", // Example event
-      start: new Date().toISOString().split("T")[0], // Today's date
-      allDay: true,
-    },
-  ]);
+  const [events, setEvents] = useContext(AppContext);
 
   // Function to add a new event
   const addEvent = (title, date) => {
