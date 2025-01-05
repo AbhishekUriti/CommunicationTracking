@@ -12,7 +12,7 @@ export const AppProvider = ({ children }) => {
         { type: "LinkedIn", date: "2024-11-25" },
       ],
       nextCommunication: { type: "LinkedIn", date: "2024-12-31" },
-      highlight: "yellow", // "red", "yellow", "none"
+      highlight: "yellow", 
     },
     {
       name: "TCS",
@@ -32,43 +32,46 @@ export const AppProvider = ({ children }) => {
     { id: 3, name: "Phone Call", mandatory: false, sequence: 3 },
   ]);
 
-  const [events, setEvents] = useState([{
-      title: "Google - Email",
-      start: new Date().toISOString().split("T")[0],
-      allDay: true,
-    },]);
-  const [overdueCommunications, setOverdueCommunications] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [overdueCommunications, setOverdueCommunications] = useState([
+     { company: "Wipro", type: "Email", overdueDays: 6 },
+    { company: "Wipro", type: "LinkedIn", overdueDays: 41 },
+    { company: "TCS", type: "Email", overdueDays: 35 },
+    { company: "TCS", type: "LinkedIn Message", overdueDays: 41 },
+  ]);
   const [todaysCommunications, setTodaysCommunications] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
 
-  // Sync Events with Companies
-  useEffect(() => {
-    const updatedEvents = [];
+ // Sync Events with Companies
+useEffect(() => {
+  const updatedEvents = [];
 
-    companies.forEach((company) => {
-      // Add last communications to events
-      if (company.lastCommunications) {
-        company.lastCommunications.forEach((comm) => {
-          updatedEvents.push({
-            title: `${company.name} - ${comm.type}`,
-            date: comm.date,
-            className: new Date(comm.date) < new Date() ? "overdue" : "",
-          });
-        });
-      }
-
-      // Add next communication to events
-      if (company.nextCommunication) {
+  companies.forEach((company) => {
+    // Add last communications to events
+    if (company.lastCommunications) {
+      company.lastCommunications.forEach((comm) => {
         updatedEvents.push({
-          title: `${company.name} - ${company.nextCommunication.type}`,
-          date: company.nextCommunication.date,
-          className: "upcoming",
+          title: `${company.name} - ${comm.type}`,
+          date: comm.date,
+          className: new Date(comm.date) < new Date() ? "overdue" : "",
         });
-      }
-    });
+      });
+    }
 
-    setEvents(updatedEvents); // Update events dynamically
-  }, [companies]);
+    // Add next communication to events
+    if (company.nextCommunication) {
+      updatedEvents.push({
+        title: `${company.name} - ${company.nextCommunication.type}`,
+        date: company.nextCommunication.date,
+        className: "upcoming",
+      });
+    }
+  });
+
+  setEvents(updatedEvents); // Update events dynamically
+}, [companies]); // Add `companies` as a dependency
+
+
 
   // Calculate Overdue and Today's Communications
   useEffect(() => {
@@ -157,7 +160,9 @@ export const AppProvider = ({ children }) => {
         methods,
         setMethods,
         overdueCommunications,
+        setOverdueCommunications,
         todaysCommunications,
+        setTodaysCommunications,
         showPopup,
         closePopup,
         events,

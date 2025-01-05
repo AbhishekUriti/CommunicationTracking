@@ -32,13 +32,23 @@ const Dashboard = () => {
               { type: newCommunication.type, date: newCommunication.date, notes: newCommunication.notes },
               ...(company.lastCommunications || []).slice(0, 4), // Ensure it's an array and slice only 5
             ],
-            highlight: "highlight", // You can customize the highlight if needed
+            nextCommunication: {
+              type: "Follow-Up",
+              date: getNextFollowUpDate(newCommunication.date),
+            },
+            highlight: "highlight",
           }
         : company
     );
 
     setCompanies(updatedCompanies);
     closeModal();
+  };
+
+  const getNextFollowUpDate = (date) => {
+    const currentDate = new Date(date);
+    currentDate.setDate(currentDate.getDate() + 7); // Schedule 7 days later
+    return currentDate.toISOString().split("T")[0];
   };
 
   return (
