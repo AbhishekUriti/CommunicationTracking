@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  // State for companies
   const [companies, setCompanies] = useState([
     {
       name: "Wipro",
@@ -12,7 +13,6 @@ export const AppProvider = ({ children }) => {
         { type: "LinkedIn", date: "2024-11-25" },
       ],
       nextCommunication: { type: "LinkedIn", date: "2024-12-31" },
-      highlight: "yellow", 
     },
     {
       name: "TCS",
@@ -22,78 +22,48 @@ export const AppProvider = ({ children }) => {
         { type: "LinkedIn Message", date: "2024-11-25" },
       ],
       nextCommunication: { type: "Email", date: "2025-01-03" },
-      highlight: "yellow",
     },
   ]);
 
+  // State for communication methods
   const [methods, setMethods] = useState([
     { id: 1, name: "LinkedIn Post", mandatory: true, sequence: 1 },
     { id: 2, name: "LinkedIn Email", mandatory: true, sequence: 2 },
     { id: 3, name: "Phone Call", mandatory: false, sequence: 3 },
   ]);
 
+  // State for calendar events
   const [events, setEvents] = useState([]);
-  const [overdueCommunications, setOverdueCommunications] = useState([
-     { company: "Wipro", type: "Email", overdueDays: 6 },
-    { company: "Wipro", type: "LinkedIn", overdueDays: 41 },
-    { company: "TCS", type: "Email", overdueDays: 35 },
-    { company: "TCS", type: "LinkedIn Message", overdueDays: 41 },
-  ]);
+
+  // State for overdue and today's communications
+  const [overdueCommunications, setOverdueCommunications] = useState([]);
   const [todaysCommunications, setTodaysCommunications] = useState([]);
+
+  // State for showing popup
   const [showPopup, setShowPopup] = useState(false);
-
- // Sync Events with Companies
-useEffect(() => {
-  const updatedEvents = [];
-
-  companies.forEach((company) => {
-    // Add last communications to events
-    if (company.lastCommunications) {
-      company.lastCommunications.forEach((comm) => {
-        updatedEvents.push({
-          title: `${company.name} - ${comm.type}`,
-          date: comm.date,
-          className: new Date(comm.date) < new Date() ? "overdue" : "",
-        });
-      });
-    }
-
-    // Add next communication to events
-    if (company.nextCommunication) {
-      updatedEvents.push({
-        title: `${company.name} - ${company.nextCommunication.type}`,
-        date: company.nextCommunication.date,
-        className: "upcoming",
-      });
-    }
-  });
-
-  setEvents(updatedEvents); // Update events dynamically
-}, [companies]); // Add `companies` as a dependency
-
-
 
   // Calculate Overdue and Today's Communications
   useEffect(() => {
-    const today = new Date().toISOString().split("T")[0]; // Current date in YYYY-MM-DD format
+    const today = new Date().toISOString().split("T")[0];
     const overdue = [];
     const dueToday = [];
 
     companies.forEach((company) => {
+      // Process last communications
       if (company.lastCommunications) {
         company.lastCommunications.forEach((comm) => {
           const commDate = new Date(comm.date).toISOString().split("T")[0];
           if (commDate === today) {
             dueToday.push({
               company: company.name,
-              date: comm.date,
               type: comm.type,
+              date: comm.date,
             });
           } else if (new Date(comm.date) < new Date(today)) {
             overdue.push({
               company: company.name,
-              date: comm.date,
               type: comm.type,
+              date: comm.date,
               overdueDays: Math.floor(
                 (new Date(today) - new Date(comm.date)) / (1000 * 60 * 60 * 24)
               ),
@@ -102,6 +72,7 @@ useEffect(() => {
         });
       }
 
+      // Process next communications
       if (company.nextCommunication) {
         const nextCommDate = new Date(
           company.nextCommunication.date
@@ -109,8 +80,8 @@ useEffect(() => {
         if (nextCommDate === today) {
           dueToday.push({
             company: company.name,
-            date: company.nextCommunication.date,
             type: company.nextCommunication.type,
+            date: company.nextCommunication.date,
           });
         }
       }
@@ -122,19 +93,63 @@ useEffect(() => {
     setShowPopup(overdue.length > 0);
   }, [companies]);
 
+  // Sync Events with Companies
+        useEffect(() => {
+        const updatedEvents = companies.flatMap((company) => [
+            ...(company.lastCommunications
+            ? company.lastCommunications.map((comm) => ({
+                title: `${company.name} - ${comm.type}`,
+                start: comm.date,
+                }))
+            : []),
+            ...(company.nextCommunication
+            ? [
+                {
+                    title: `${company.name} - ${company.nextCommunication.type}`,
+                    start: company.nextCommunication.date,
+                },
+                ]
+            : []),
+        ]);
+
+        setEvents(updatedEvents);
+        }, [companies]);
+
+
+  // Function to reschedule a communication
+  const rescheduleCommunication = (companyName, communicationType, newDate) => {
+    const updatedCompanies = companies.map((company) => {
+      if (company.name === companyName) {
+        return {
+          ...company,
+          lastCommunications: [
+            ...(company.lastCommunications || []),
+            { type: communicationType, date: newDate },
+          ],
+          nextCommunication: { ...company.nextCommunication, date: newDate },
+        };
+      }
+      return company;
+    });
+
+    setCompanies(updatedCompanies);
+  };
+
+  // Function to close the popup
   const closePopup = () => setShowPopup(false);
 
+  // Function to add a new company
   const addCompany = (name, location, lastCommunications, nextCommunication) => {
     const newCompany = {
       name,
       location,
       lastCommunications,
       nextCommunication,
-      highlight: "none",
     };
     setCompanies([...companies, newCompany]);
   };
 
+  // Function to add a communication to a company
   const addCommunication = (companyName, communication) => {
     const updatedCompanies = companies.map((company) => {
       if (company.name === companyName) {
@@ -152,6 +167,7 @@ useEffect(() => {
     setCompanies(updatedCompanies);
   };
 
+  // Provide the context values to children
   return (
     <AppContext.Provider
       value={{
@@ -159,14 +175,13 @@ useEffect(() => {
         setCompanies,
         methods,
         setMethods,
-        overdueCommunications,
-        setOverdueCommunications,
-        todaysCommunications,
-        setTodaysCommunications,
-        showPopup,
-        closePopup,
         events,
         setEvents,
+        overdueCommunications,
+        todaysCommunications,
+        showPopup,
+        closePopup,
+        rescheduleCommunication,
         addCompany,
         addCommunication,
       }}

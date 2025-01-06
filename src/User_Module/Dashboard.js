@@ -33,7 +33,7 @@ const Dashboard = () => {
               ...(company.lastCommunications || []).slice(0, 4), // Ensure it's an array and slice only 5
             ],
             nextCommunication: {
-              type: "Follow-Up",
+              type: newCommunication.type,
               date: getNextFollowUpDate(newCommunication.date),
             },
             highlight: "highlight",

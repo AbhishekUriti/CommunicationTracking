@@ -47,39 +47,32 @@ const Notifications = () => {
     setRescheduleModal(true);
   };
 
- const handleReschedule = () => {
-  if (!newDate) return;
+  const handleReschedule = () => {
+    if (!newDate) return;
 
-  // Update the specific company's communications
-  const updatedCompanies = companies.map((company) => {
-    if (company.name === selectedCommunication.company) {
-      return {
-        ...company,
-        lastCommunications: [
-          ...(company.lastCommunications || []),
-          {
-            type: selectedCommunication.type,
-            date: newDate,
-          },
-        ],
-      };
-    }
-    return company;
-  });
+    // Update the specific company's communications
+    const updatedCompanies = companies.map((company) => {
+      if (company.name === selectedCommunication.company) {
+        return {
+          ...company,
+          lastCommunications: [
+            ...(company.lastCommunications || []),
+            {
+              type: selectedCommunication.type,
+              date: newDate,
+            },
+          ],
+          nextCommunication: { ...company.nextCommunication, date: newDate },
+        };
+      }
+      return company;
+    });
 
-  // Update companies array in AppContext
-  setCompanies(updatedCompanies);
-
-  console.log(
-    `Rescheduled ${selectedCommunication.company}'s communication to ${newDate}`
-  );
-
-  // Close modal and reset
-  setRescheduleModal(false);
-  setSelectedCommunication(null);
-  setNewDate("");
-};
-
+    setCompanies(updatedCompanies);
+    setRescheduleModal(false);
+    setSelectedCommunication(null);
+    setNewDate("");
+  };
 
   return (
     <div className="notifications">
@@ -135,10 +128,10 @@ const Notifications = () => {
               <strong>{comm.company}</strong> - {comm.type}{" "}
               <span>(Due today)</span>
               <div className="actions">
-                <button  onClick={() => markAsDone(comm, "today")}>
+                <button onClick={() => markAsDone(comm, "today")}>
                   Mark as Done
                 </button>
-                <button  onClick={() => reschedule(comm)}>Reschedule</button>
+                <button onClick={() => reschedule(comm)}>Reschedule</button>
               </div>
             </div>
           ))

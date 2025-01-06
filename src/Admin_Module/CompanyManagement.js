@@ -11,24 +11,34 @@ const Modal = ({ children, onClose }) => {
       </div>
     </div>
   );
-};  
+};
 
 const CompanyManagement = () => {
-  const { companies, setCompanies ,events, setEvents } = useContext(AppContext);
+  const { companies, setCompanies, events, setEvents } = useContext(AppContext);
   const [editingCompany, setEditingCompany] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const saveCompany = (company) => {
-    setCompanies([...companies, { id: companies.length + 1, ...company }]);
+      const saveCompany = (company) => {
+        setCompanies((prevCompanies) => [
+          ...prevCompanies,
+          {
+            id: prevCompanies.length + 1,
+            ...company,
+            lastCommunications: company.lastCommunications || [], // Initialize if missing
+          },
+        ]);
 
-  const newEvent = {
-      title: `${company.name} - Communication`,
-      start: new Date().toISOString().split("T")[0], // Today's date
-      allDay: true,
-    };
-    setEvents([...events, newEvent]);
-    setIsModalOpen(false);
-  };
+        const newEvent = {
+          title: `${company.name} - Communication`,
+          start: new Date().toISOString().split("T")[0], // Today's date
+          allDay: true,
+        };
+
+        setEvents((prevEvents) => [...(prevEvents || []), newEvent]); // Ensure events is initialized
+        setIsModalOpen(false);
+      };
+
+
 
   const handleAddCompany = (company) => {
     saveCompany(company);
@@ -41,13 +51,15 @@ const CompanyManagement = () => {
       )
     );
 
-    setEvents(
-      events.map((event) =>
-        event.title.startsWith(updatedCompany.name)
-          ? { ...event, title: `${updatedCompany.name} - Communication` }
-          : event
-      )
-    );
+    if (typeof setEvents === "function") {
+      setEvents(
+        events.map((event) =>
+          event.title.startsWith(updatedCompany.name)
+            ? { ...event, title: `${updatedCompany.name} - Communication` }
+            : event
+        )
+      );
+    }
 
     setEditingCompany(null);
     setIsModalOpen(false);
@@ -57,11 +69,13 @@ const CompanyManagement = () => {
     const deletedCompany = companies.find((company) => company.id === id);
     setCompanies(companies.filter((company) => company.id !== id));
 
-    setEvents(
-      events.filter(
-        (event) => !event.title.startsWith(deletedCompany.name)
-      )
-    );
+    if (typeof setEvents === "function") {
+      setEvents(
+        events.filter(
+          (event) => !event.title.startsWith(deletedCompany.name)
+        )
+      );
+    }
   };
 
   const openModal = (company = {}) => {
@@ -101,7 +115,7 @@ const CompanyManagement = () => {
         <Modal onClose={() => setIsModalOpen(false)}>
           <CompanyForm
             company={editingCompany}
-            onSave={editingCompany.id ? handleEditCompany : handleAddCompany}
+            onSave={editingCompany?.id ? handleEditCompany : handleAddCompany}
             onCancel={() => setIsModalOpen(false)}
           />
         </Modal>

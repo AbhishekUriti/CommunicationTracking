@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
 import CompanyManagement from "./Admin_Module/CompanyManagement";
 import CommunicationMethods from "./Admin_Module/CommunicationMethods";
 import Dashboard from "./User_Module/Dashboard";
 import Notifications from "./User_Module/Notifications";
-import Reports from "./User_Module/Reports"; 
+import Reports from "./User_Module/Reports";
+import CalendarView from "./User_Module/CalendarView";
+
 
 function App() {
-  const [companies, setCompanies] = useState([
+  const [companies] = useState([
     {
       name: "Wipro",
       lastCommunications: [
@@ -24,11 +24,11 @@ function App() {
         { date: "2024-11-25" },
       ],
     },
-
   ]);
 
   const [notificationCount, setNotificationCount] = useState(0);
 
+  // Calculate notification count
   useEffect(() => {
     const today = new Date();
     let count = 0;
@@ -127,8 +127,11 @@ function App() {
               path="/notifications"
               element={<Notifications companies={companies} />}
             />
-            <Route path="/calendar" element={<CalendarView companies={companies} />} />
-            <Route path="/reports" element={<Reports />} /> {/* Add Reports */}
+            <Route
+              path="/calendar"
+              element={<CalendarView companies={companies} />} // Pass companies to CalendarView
+            />
+            <Route path="/reports" element={<Reports />} />
           </Routes>
         </div>
       </div>
@@ -136,31 +139,4 @@ function App() {
   );
 }
 
-function CalendarView({ companies }) {
-  const events = companies.flatMap((company) =>
-    company.lastCommunications.map((comm) => ({
-      title: company.name,
-      date: comm.date,
-    }))
-  );
-
-  return (
-    <div>
-      <h2>Company Communications Calendar</h2>
-      <FullCalendar
-        plugins={[dayGridPlugin]}
-        initialView="dayGridMonth"
-        events={events}
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,dayGridWeek,dayGridDay",
-        }}
-      />
-    </div>
-  );
-}
-
 export default App;
-
-
