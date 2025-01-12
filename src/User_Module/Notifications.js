@@ -18,7 +18,7 @@ const Notifications = () => {
   const [rescheduleModal, setRescheduleModal] = useState(false);
   const [selectedCommunication, setSelectedCommunication] = useState(null);
   const [newDate, setNewDate] = useState("");
-
+  
   // Filtered data based on user input
   const filteredOverdue = overdueCommunications.filter((comm) =>
     comm.company.toLowerCase().includes(filter.toLowerCase())
@@ -28,18 +28,23 @@ const Notifications = () => {
     comm.company.toLowerCase().includes(filter.toLowerCase())
   );
 
-  // Mark as Done function
+    // Mark as Done function
   const markAsDone = (comm, type) => {
     if (type === "overdue") {
       setOverdueCommunications(
-        overdueCommunications.filter((c) => c !== comm)
+        overdueCommunications.filter(
+          (c) => c.company !== comm.company || c.type !== comm.type
+        )
       );
     } else if (type === "today") {
       setTodaysCommunications(
-        todaysCommunications.filter((c) => c !== comm)
+        todaysCommunications.filter(
+          (c) => c.company !== comm.company || c.type !== comm.type
+        )
       );
     }
   };
+
 
   // Reschedule function
   const reschedule = (comm) => {

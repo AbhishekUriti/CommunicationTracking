@@ -178,6 +178,8 @@ export const AppProvider = ({ children }) => {
         events,
         setEvents,
         overdueCommunications,
+        setTodaysCommunications,
+        setOverdueCommunications,
         todaysCommunications,
         showPopup,
         closePopup,
